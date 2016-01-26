@@ -1,0 +1,53 @@
+@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Region.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Content.Resources
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+<script type="text/html" id="bcms-region-overlay-template">
+    <div class="bcms-region-overlay bcms-layer">
+        @if (!Model.IsReadOnly && Model.HasEditRole)
+        {
+            <div class="bcms-region-actions">
+                <div class="bcms-region-button bcms-region-sortdone" style="display: none;">@RootGlobalization.Button_Save</div>
+                <div class="bcms-region-button bcms-region-contentstree" style="display: none;">@RootGlobalization.Button_Manage</div>
+                <div class="bcms-region-button bcms-region-sortcancel" style="display: none;">@RootGlobalization.Button_Cancel</div>
+
+                <div class="bcms-region-button bcms-region-addcontent">
+                    <div class="bcms-region-options-block">
+                        <div class="bcms-region-pick-editor bcms-region-addhtml">@RootGlobalization.Button_AddContent_Html</div>
+                        <div class="bcms-region-pick-editor bcms-region-addmarkdown">@RootGlobalization.Button_AddContent_Markdown</div>
+                        <div class="bcms-region-pick-editor bcms-region-addtext">@RootGlobalization.Button_AddContent_PlainText</div>
+                        <div class="bcms-region-pick-editor bcms-region-insertwidget">@RootGlobalization.Button_AddContent_Widget</div>
+                    </div>
+                </div>
+                @*<div class="bcms-region-button bcms-region-addwidget"></div>*@
+                <div class="bcms-region-button bcms-region-sortcontent"></div>
+            </div>
+            <div class="bcms-sort-block"></div>
+        }
+    </div>
+</script>

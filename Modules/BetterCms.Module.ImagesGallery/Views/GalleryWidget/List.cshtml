@@ -1,0 +1,68 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="List.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.ImagesGallery
+@using BetterCms.Module.ImagesGallery.Content.Resources
+@model BetterCms.Module.ImagesGallery.ViewModels.GalleryViewModel
+
+@if (Model.LoadCmsStyles)
+{
+    @Html.Partial("Partial/ListStyles")
+}
+
+@{
+    var i = 0;
+    var l = Model.Albums.Count;
+    var perSection = Model.ImagesPerSection <= 0 ? l : Model.ImagesPerSection;
+    
+    foreach (var album in Model.Albums)
+    {
+        if (i % perSection == 0)
+        {
+            @:<section>
+        }
+        
+        <div class="bcms-album-holder">
+            <img src="@album.CoverImageUrl" alt="@album.Title" />
+            <div class="bcms-album-name">
+                <h4><a href="@album.Url">@album.Title</a></h4>
+                <span>@album.ImagesCount @ImagesGalleryGlobalization.GalleryWidget_Pictures@if (album.LastUpdateDate.HasValue) { @Html.Raw(",") }</span>
+                @if (album.LastUpdateDate.HasValue)
+                {
+                    <time datetime="@album.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@album.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
+                }
+            </div>
+        </div>
+
+        i++;
+
+        if (i % perSection == 0 || i == l)
+        {
+            @:</section>
+        }
+    }
+}

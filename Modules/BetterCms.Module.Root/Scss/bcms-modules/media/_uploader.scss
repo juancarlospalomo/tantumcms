@@ -1,0 +1,176 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_uploader.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$uploaded-states: (
+                ('failed', $bg-red),
+                ('success' $bg-green)
+);
+
+.bcms-file-drop-zone {
+    @include vertical-align($block: table-cell);
+    background-color: $bg-modal-options;
+    border: $border-thick-dashed-smoke;
+    border-radius: 2px;
+    height: 300px;
+    margin-bottom: 15px;
+    text-align: center;
+
+    &-container {
+        display: table;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    &-text {
+        color: $text-light;
+        cursor: default;
+        font-size: 23px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    &-download {
+        margin-top: 25px;
+
+        > a {
+            color: $text-light;
+            cursor: pointer;
+            font-size: 16px;
+
+            &:hover {
+                color: $text-blue;
+            }
+        }
+    }
+
+    &-active {
+        .bcms-btn-main {
+            opacity: 0;
+        }
+    }
+}
+
+.bcms-btn-upload-files-text {
+    .bcms-btn-main & {
+        @include size(100%);
+        color: $white;
+        cursor: pointer;
+        display: block;
+    }
+}
+
+.bcms-uploaded-container {
+    margin-top: 35px;
+}
+
+.bcms-upload {
+    &-block {
+        background-color: $white;
+        border: $border-thin-smoke;
+        cursor: default;
+        display: table;
+        height: 39px;
+        margin-top: -1px;
+        overflow: hidden;
+        width: 100%;
+
+        @each $name, $color in $uploaded-states {
+            &.bcms-upload-#{$name} {
+                .bcms-upload-description {
+                    color: $color;
+                }
+            }
+        }
+
+        > div {
+            @include vertical-align($block: table-cell);
+            font-size: 12px;
+            line-height: 39px;
+            padding: 0 10px;
+        }
+    }
+
+    &-file-titles {
+        @include ellipsis();
+        color: $text-blue;
+        width: 280px;
+    }
+
+    &-info {
+        font-weight: 700;
+        width: 40px;
+    }
+
+    &-bar-holder {
+        overflow: hidden;
+        text-align: right;
+    }
+
+    &-description {
+        font-weight: 600;
+    }
+
+    &-size-info {
+        border: {
+            right: $border-thin-smoke;
+            left: $border-thin-smoke;
+        }
+        text-align: center;
+        width: 100px;
+    }
+}
+
+.bcms-media-delete-holder {
+    position: relative;
+    text-align: center;
+    width: 40px;
+}
+
+.bcms-progress {
+    @include transition(all 200ms);
+    background-color: $bg-blue;
+    height: 15px;
+    margin: -1px;
+
+    &-bar {
+        background-color: $bg-modal-options;
+        border: $border-thin-smoke;
+        box-shadow: inset 0 0 6px rgba($gray, .2);
+        box-sizing: border-box;
+        float: right;
+        height: 15px;
+        overflow: hidden;
+        width: 300px;
+    }
+
+    &-info {
+        @include vertical-align();
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+}

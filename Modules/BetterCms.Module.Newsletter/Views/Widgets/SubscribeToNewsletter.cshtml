@@ -1,0 +1,69 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SubscribeToNewsletter.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Newsletter.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Newsletter.ViewModels.SubscriberViewModel
+
+@{
+    // Subscribe to newsletter
+    var labelTitle = ViewData["Label title"];
+    // Submit
+    var submitTitle = ViewData["Submit title"];
+    // email...
+    var emailPlaceholder = ViewData["Email placeholder"];
+    // Submit is disabled
+    bool submitDisabled = false;
+    if (ViewData["Submit is disabled"] != null)
+    {
+        if (ViewData["Submit is disabled"] is bool)
+        {
+            submitDisabled = (bool)ViewData["Submit is disabled"];
+        }
+        else
+        {
+            Boolean.TryParse(ViewData["Submit is disabled"].ToString(), out submitDisabled);
+        }
+    }
+}
+
+@using (Html.BeginForm<SubscriberController>(s => s.Subscribe(null), FormMethod.Post, new { @class = "bcms-newsletter-subscribe-form" }))
+{
+    <label class="bcms-newsletter-subscribe-label" for="Email">@labelTitle</label>
+    <div class="bcms-field-block bcms-newsletter-field-block">
+        @Html.TextBoxFor(m => m.Email, new
+                                           {
+                                               @type = "email",
+                                               @class = "bcms-newsletter-subscribe-input required",
+                                               @placeholder = @emailPlaceholder
+                                           })
+        @Html.BcmsValidationMessageFor(m => m.Email)
+    </div>
+    <button type="submit" class="bcms-newsletter-subscribe-submit"@(submitDisabled ? " disabled=\"disabled\"" : string.Empty)>@submitTitle</button>
+}

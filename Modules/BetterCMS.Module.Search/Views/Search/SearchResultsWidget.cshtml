@@ -1,0 +1,76 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SearchResultsWidget.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Search
+@using BetterCms.Module.Search.Content.Resources
+@model BetterCms.Module.Search.ViewModels.SearchResultsViewModel
+
+@if (Model != null)
+{
+    if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="bcms-search-results-error">
+            @Model.ErrorMessage 
+        </div>
+    } 
+    else if (Model.Results != null && !string.IsNullOrWhiteSpace(Model.Results.Query) && Model.Results.Items != null)
+    {
+        var showTotalResults = Model.WidgetViewModel.GetOptionValue<bool>(SearchModuleConstants.WidgetOptionNames.ShowTotalResults);
+
+        if (showTotalResults)
+        {
+            var message = Model.WidgetViewModel.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.TotalCountMessage);
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                message = SearchGlobalization.SearchResults_TotalCount_Message;
+            }
+            message = string.Format(message, 
+                Model.Results.Items.Count, 
+                Model.Results.TotalResults, 
+                string.Format("<span class=\"bcms-total-search-results-query\">{0}</span>", HttpUtility.HtmlEncode(Model.Results.Query)));
+            
+            <div class="bcms-total-search-results">
+                @Html.Raw(message)
+            </div>
+        }
+
+        foreach (var item in Model.Results.Items)
+        {
+            var cssClass = !item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
+
+            <article class="@cssClass">
+                <h3>@item.Title</h3>
+                @if (!item.IsDenied)
+                {
+                    <a href="@(item.Link ?? "#")">@item.FormattedUrl</a>
+                }
+                <p>@item.Snippet</p>            
+            </article>
+        }
+    }
+}

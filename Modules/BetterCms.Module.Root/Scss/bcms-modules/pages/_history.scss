@@ -1,0 +1,134 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_history.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$history-preview-box: ($header-height + $tab-height);
+
+$history-states: (
+                ('published', $text-blue),
+                ('draft', $text-green),
+                ('archived', $text-red)
+);
+
+$history-bar-height: 44px;
+
+%history-preview-frame {
+    background-color: $bg-modal-options;
+    box-sizing: border-box;
+    height: calc(70vh - #{$history-preview-box});
+    padding: 10px 20px;
+    position: relative;
+}
+
+.bcms-history {
+    &-preview-holder {
+        @extend %history-preview-frame;
+        overflow: auto;
+
+        &-media {
+            height: calc(70vh - #{$header-height});
+        }
+
+        &.bcms-history-preview-iframe {
+            overflow: hidden;
+            padding: 0;
+        }
+    }
+
+    &-preview-data {
+        @extend %history-preview-frame;
+        box-sizing: border-box;
+        overflow: auto;
+
+        padding: 20px 30px;
+    }
+
+    &-info {
+        @include positioning($center: true);
+        color: $text-dark;
+        font-size: 19px;
+        text-align: center;
+    }
+
+    &-table-holder {
+        height: calc(30vh - #{$footer-height});
+    }
+
+    &-table-top {
+        background-color: $white;
+        border: {
+            top: $border-thin-smoke;
+            bottom: $border-thin-smoke;
+        }
+        box-sizing: border-box;
+        height: $history-bar-height;
+        padding: 3px 30px;
+
+        .bcms-large-titles {
+            line-height: 36px;
+        }
+    }
+
+    &-items-list {
+        background-color: $white;
+        height: calc(30vh - #{$footer-height + $history-bar-height});
+        overflow-y: auto;
+
+        &-media {
+            height: calc(30vh - #{$footer-height + $history-bar-height});
+        }
+    }
+}
+
+@each $name, $state-color in $history-states {
+    .bcms-#{$name}-state {
+        color: $state-color;
+    }
+
+}
+
+.bcms-history-grid {
+    .bcms-history-items-list & {
+        border: {
+            top: 0;
+            right: 0;
+            bottom: $border-thin-smoke;
+            left: 0;
+        }
+        margin: -1px 0 0;
+
+        th,
+        td {
+            &:first-child {
+                border-left: 0;
+            }
+
+            &:last-child {
+                border-right: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,186 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_contentstree.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$content-headers: (
+                ('region', $text-blue, 16px, $bcms-manager-region),
+                ('content', $text-dark, 15px, $bcms-manager-content)
+);
+
+.bcms-tree-container {
+    padding-bottom: 15px;
+
+    > h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 15px 0;
+    }
+}
+
+.bcms-contents-tree {
+    &-add-block {
+        @include transition(background-color 150ms);
+        @include position(absolute, -1px -1px null null);
+        @include size(26px);
+        background: $bg-blue url($bcms-content-add) no-repeat center;
+        cursor: pointer;
+        z-index: 5;
+
+        &:hover,
+        &.bcms-active {
+            background-color: darken($bg-blue, 10%);
+        }
+    }
+
+    &-add-content {
+        @include position(absolute, 100% 0 null null);
+        display: none;
+
+        .bcms-active & {
+            display: block;
+        }
+    }
+
+    &-controls {
+        @include transition(all 200ms);
+        background-color: darken($bg-blue, 10%);
+        color: $white;
+        line-height: 18px;
+        padding: 5px 20px;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: darken($bg-gray, 10%);
+        }
+    }
+}
+
+.bcms-tree {
+    &-item-container {
+        position: relative;
+    }
+
+    &-region {
+        background-color: $white;
+        box-sizing: border-box;
+        margin-top: 15px;
+        min-height: 48px;
+        outline: $border-thin-blue-dashed;
+        padding: 15px 43px;
+        position: relative;
+
+        &.bcms-region-activated {
+            z-index: 10;
+        }
+    }
+
+    &-content {
+        @include transition(border-color 200ms);
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-shadow: 0 0 6px 0 rgba($black, .1);
+        cursor: move;
+        margin-top: 15px;
+        padding: 15px 43px;
+
+        &.bcms-contents-hover {
+            border-color: rgba($dark-main, .4);
+        }
+    }
+
+    &-header {
+        cursor: move;
+        position: relative;
+
+        .bcms-action-edit {
+            @include vertical-align();
+            margin-left: 5px;
+        }
+
+        &-region {
+            cursor: default;
+        }
+    }
+
+    &-controls-box {
+        @include positioning($center-y: true);
+        @include transition(all 150ms);
+        cursor: pointer;
+        opacity: 0;
+        right: 0;
+        visibility: hidden;
+
+        > div {
+            @include vertical-align();
+            margin-left: 5px;
+        }
+    }
+
+    @each $name, $color, $font-size, $icon in $content-headers {
+        &-#{$name}-title {
+            @include vertical-align();
+            color: $color;
+            font: {
+                size: $font-size;
+                weight: 600;
+            }
+            position: relative;
+            text-transform: capitalize;
+
+            @include virtual(after) {
+                @include positioning($center-y: true);
+                @include size(16px);
+                background: url($icon) no-repeat center;
+                left: -25px;
+            }
+        }
+    }
+}
+
+.bcms-contents-hover {
+    > .bcms-tree-header {
+        > .bcms-tree-controls-box {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.bcms-dragging {
+    @include clearfix();
+    background-color: $bg-smoke;
+    cursor: move;
+    min-height: 46px;
+    opacity: .8;
+    z-index: 9999;
+}
+
+.bcms-contents-tree-drop-area {
+    border: $border-thick-dashed-smoke;
+    box-sizing: border-box;
+    height: 48px;
+    margin: 15px 0 0;
+}

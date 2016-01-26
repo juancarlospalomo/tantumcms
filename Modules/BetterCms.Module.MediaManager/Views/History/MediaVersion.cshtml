@@ -1,0 +1,69 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MediaVersion.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.MediaManager.ViewModels.History
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@model MediaPreviewViewModel
+           
+@helper RenderProperty(MediaPreviewPropertyViewModel property) {
+    var value = property.Value;
+    if (!string.IsNullOrEmpty(value) && value.Length > 500)
+    {
+        value = value.Substring(0, 497) + "...";
+    }
+    
+    <div class="bcms-file-info-text">
+        @if (property.IsImageUrl)
+        {
+            <div class="bcms-media-history-image-holder">
+                <img src="@property.Value" alt="@property.Title" />
+            </div>
+        }
+        else if (property.IsUrl)
+        {
+            <a href="@property.Value" target="_blank">@property.Title</a>
+        }
+        else
+        {
+            <b>@property.Title: </b>@value
+        }
+    </div>
+}
+
+<div class="bcms-media-history-holder">
+    @Html.MessagesBox()
+
+    @if (Model != null)
+    {
+        foreach (var property in Model.Properties)
+        {
+            @RenderProperty(property)
+        }
+    }
+</div>
+

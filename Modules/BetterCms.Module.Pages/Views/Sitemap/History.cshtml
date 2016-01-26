@@ -1,0 +1,121 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="History.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Command.History.GetSitemapHistory
+@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.History
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Models
+@using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+@model SitemapHistoryViewModel
+
+@helper PreviewLink(SitemapHistoryItem item)
+{
+    <div class="bcms-action-usage bcms-js-preview" title="@RootGlobalization.Button_Preview" data-id="@item.Id">@RootGlobalization.Button_Preview</div>
+}
+@helper RestoreLink(SitemapHistoryItem item)
+{
+    if (item.CanCurrentUserRestoreIt)
+    {
+        <div class="bcms-action-restore bcms-js-restore" title="@RootGlobalization.Button_Restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</div>
+    }
+    else
+    {
+        @:&nbsp;
+    }
+}
+
+@{
+    Action<ColumnBuilder<SitemapHistoryItem>> columns = column =>
+    {
+        column.For(f => PreviewLink(f))
+               .Encode(false)
+               .Named("&nbsp;")
+               .Sortable(false)
+               .HeaderAttributes(@style => "width: 40px; psdding: 0;", @class => "bcms-tables-nohover");
+
+        column.For(m => m.SitemapTitle)
+               .Named(NavigationGlobalization.SitemapHistory_Column_Title)
+               .SortColumnName("SitemapTitle");
+
+        column.For(m => m.ArchivedOn.ToFormattedDateString())
+               .Named(NavigationGlobalization.SitemapHistory_Column_ArchivedOn)
+               .SortColumnName("ArchivedOn")
+               .HeaderAttributes(@style => "width: 130px;");
+
+        column.For(m => m.ArchivedByUser)
+               .Named(NavigationGlobalization.SitemapHistory_Column_ArchivedBy)
+               .SortColumnName("ArchivedByUser");
+
+        column.For(m => m.StatusName)
+               .Named(NavigationGlobalization.SitemapHistory_Column_Status)
+               .SortColumnName("StatusName")
+               .Encode(false)
+               .HeaderAttributes(@style => "width: 95px;");
+
+        column.For(f => RestoreLink(f))
+               .Encode(false)
+               .Named("&nbsp;")
+               .Sortable(false)
+               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
+    };
+}
+
+@Html.MessagesBox()
+<div class="bcms-modal-frame-holder">
+    <div class="bcms-history-preview-holder bcms-history-preview-holder-media">
+        <div class="bcms-history-preview" id="bcms-history-preview">
+            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
+            @*<div class="bcms-history-content"></div>*@
+        </div>
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="bcms-history-table-holder">
+            @using (Html.BeginForm<SitemapController>(f => f.ShowSitemapHistory((GetSitemapHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
+            {
+                @Html.HiddenGridOptions(Model.GridOptions)
+                @Html.HiddenFor(model => model.SitemapId)
+                <div class="bcms-history-table-top">
+                    <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
+                </div>
+
+                <div class="bcms-history-items-list bcms-history-items-list-media">
+                    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<SitemapHistoryItem>())
+                    @Html.HiddenSubmit()
+                </div>
+            }
+        </div>
+    }
+</div>

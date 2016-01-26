@@ -1,0 +1,75 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Migration201308021130.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using FluentMigrator;
+
+namespace BetterCms.Module.Root.Models.Migrations
+{
+    [Migration(201308021130)]
+    public class Migration201308021130 : DefaultMigration
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Migration201308021130" /> class.
+        /// </summary>
+        public Migration201308021130()
+            : base(RootModuleDescriptor.ModuleName)
+        {
+        }
+
+        public override void Up()
+        {
+            Rename
+                .Table("ContentOptionTypes").InSchema(SchemaName)
+                .To("OptionTypes").InSchema(SchemaName);
+
+            // Create new foreign keys, remove old ones
+            Create
+                .ForeignKey("FK_Cms_ContentOptions_Type_Cms_OptionTypes_Id")
+                .FromTable("ContentOptions").InSchema(SchemaName)
+                .ForeignColumn("Type")
+                .ToTable("OptionTypes").InSchema(SchemaName)
+                .PrimaryColumn("Id");
+
+            Create
+                .ForeignKey("FK_Cms_PageContentOptions_Type_Cms_OptionTypes_Id")
+                .FromTable("PageContentOptions").InSchema(SchemaName)
+                .ForeignColumn("Type")
+                .ToTable("OptionTypes").InSchema(SchemaName)
+                .PrimaryColumn("Id");
+
+            Delete
+                .ForeignKey("FK_Cms_ContentOptions_Type_Cms_ContentOptionTypes_Id")
+                .OnTable("ContentOptions").InSchema(SchemaName);
+            
+            Delete
+                .ForeignKey("FK_Cms_PageContentOptions_Type_Cms_ContentOptionTypes_Id")
+                .OnTable("PageContentOptions").InSchema(SchemaName);
+        }
+    }
+}

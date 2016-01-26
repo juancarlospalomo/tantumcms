@@ -1,0 +1,157 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_index.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+html, body {
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 1.5em;
+    margin: 0;
+}
+
+//module default styles
+%header-extender {
+    color: $text-dark;
+    font-family: $font-base-family;
+    line-height: 1.5;
+}
+
+h1 {
+    @extend %header-extender;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 20px;
+}
+
+h2 {
+    @extend %header-extender;
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0 0 20px;
+}
+
+h3 {
+    @extend %header-extender;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 10px 0 20px;
+}
+
+h4 {
+    @extend %header-extender;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 10px 0 20px;
+}
+
+a {
+    color: $blue;
+    transition: color 0.1s ease-in;
+
+    &.bcms-logo {
+        float: left;
+        margin-top: 30px;
+    }
+}
+
+time {
+    color: $text-light;
+    font-size: 12px;
+}
+
+label {
+    color: #282a2e;
+    display: block;
+    font-family: 'Opan Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+//module IE only
+img {
+    border: 0;
+    display: block;
+}
+
+//module style helpers
+.clearfix {
+    @include clearfix();
+}
+
+//module main layout
+.page {
+    background-color: $white;
+    color: $text-gray;
+    margin: 0 0 -55px 0;
+    min-height: 100%;
+    min-width: 940px;
+
+    &-header {
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;
+        border-bottom: 1px solid #ececec;
+        height: 115px;
+    }
+
+    &-block {
+        margin: 0 auto;
+        padding: 70px 0 55px;
+        position: relative;
+        width: 940px;
+    }
+
+    &-frame {
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+        width: 940px;
+    }
+
+    &-footer {
+        border-top: $border-thin-smoke;
+        height: 49px;
+        margin: 0 auto;
+        width: 940px;
+    }
+}
+
+//module footer
+.copyright {
+    color: $text-gray;
+    float: left;
+    font: {
+        family: $font-base-family;
+        size: 11px;
+        weight: 400;
+    }
+    padding-top: 9px;
+}

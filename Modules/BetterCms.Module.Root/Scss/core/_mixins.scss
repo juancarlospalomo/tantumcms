@@ -1,0 +1,164 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_mixins.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+@mixin clearfix($extend: true) {
+    @if ($extend) {
+        @extend %clearfix;
+    } @else {
+        &:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+    }
+}
+
+%clearfix {
+    @include clearfix($extend: false);
+}
+
+.bcms-clearfix {
+    @include clearfix();
+}
+
+%reset {
+    margin: 0;
+    padding: 0;
+}
+
+@mixin vertical-align($block: inline-block, $align: middle) {
+    display: $block;
+    vertical-align: $align;
+}
+
+@mixin virtual($virtual: null, $content: null, $both: null) {
+    $ampersand: unquote('&');
+    @if ($ampersand) {
+        @if ($virtual == after) {
+            &:after {
+                content: '#{$content}';
+                @content;
+            }
+        } @else if ($virtual == before) {
+            &:before {
+                content: '#{$content}';
+                @content;
+            }
+        } @else if ($both == before after) {
+            &:before,
+            &:after {
+                content: '#{$content}';
+                @content;
+            }
+        }
+    } @else {
+        @warn "No parent exist! Add your ':#{$virtual}' element to existing class";
+    }
+}
+
+@mixin positioning($center: null, $center-y: null, $center-x: null, $position: absolute) {
+    position: $position;
+
+    @if $center {
+        @include transform(translate(-50%, -50%));
+        left: 50%;
+        top: 50%;
+    }
+    @if $center-y {
+        @include transform(translateY(-50%));
+        top: 50%;
+    }
+    @if $center-x {
+        @include transform(translateX(-50%));
+        left: 50%;
+    }
+}
+
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+@mixin ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin button() {
+    @include vertical-align();
+    border: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: $font-base-family;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    @content
+}
+
+@mixin close-button($icon: null, $position: null) {
+    @include position(absolute, $position);
+    @include size(20px);
+    background: url($icon) no-repeat center;
+    cursor: pointer;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: -999em;
+}
+
+@mixin flexible-grid($elem-class: null) {
+    $db-grid-columns: 12 !default;
+
+    @if ($elem-class != null) {
+        @while $db-grid-columns > 0 {
+            &:first-child {
+                &:nth-last-child(#{$db-grid-columns}),
+                &:nth-last-child(#{$db-grid-columns}) ~ #{$elem-class} {
+                    width: (100% / $db-grid-columns);
+                }
+            }
+            $db-grid-columns: $db-grid-columns - 1;
+        }
+    } @else {
+        @warn 'flexible-grid mixin should contain class or elements name';
+        &:after {
+            content: 'flexible-grid mixin should contain class or elements name';
+        }
+    }
+    @content;
+}

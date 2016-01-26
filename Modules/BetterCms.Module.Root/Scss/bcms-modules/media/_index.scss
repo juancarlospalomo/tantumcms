@@ -1,0 +1,183 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_index.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+.bcms-media {
+    &-table {
+        .bcms-sort-arrow {
+            margin-right: 30px;
+        }
+    }
+
+    &-new-folder {
+        background: $white url($bcms-media-new-folder) no-repeat 10px center;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        cursor: pointer;
+        float: right;
+        font: {
+            size: 12px;
+            weight: 600;
+        }
+        height: 32px;
+        line-height: 30px;
+        padding: 0 15px 0 40px;
+    }
+
+    &-up {
+        background: url($bcms-media-folder-up) no-repeat left center;
+        color: $text-blue;
+        cursor: pointer;
+        float: left;
+        height: 32px;
+        line-height: 30px;
+        padding-left: 14px;
+    }
+
+    &-item-info {
+        cursor: pointer;
+        float: left;
+    }
+
+    &-folder {
+        @include vertical-align();
+        @include size(22px 18px);
+        background: url($bcms-media-folder) no-repeat center;
+        margin-right: 10px;
+    }
+
+    &-name {
+        @include vertical-align();
+        color: $text-blue;
+    }
+
+    &-controls {
+        display: none;
+
+        .bcms-field-wrapper {
+            float: left;
+            width: span(10);
+        }
+    }
+
+    &-buttons {
+        float: right;
+        width: span(2);
+    }
+
+    &-preview {
+        background-color: $white;
+        border: $border-pop-box;
+        box-shadow: $pop-box-shadow;
+        padding: 15px 25px 25px;
+        position: fixed;
+        z-index: 9999;
+
+        img {
+            max-height: 250px;
+            max-width: 400px;
+        }
+    }
+
+    &-click-active {
+        background-color: $sky-blue !important;
+    }
+}
+
+.bcms-folder-box {
+    &-active {
+        background-color: $sky-blue;
+
+        .bcms-media-item-info {
+            display: none;
+        }
+
+        .bcms-media-controls {
+            display: block;
+        }
+    }
+}
+
+.bcms-media-context {
+    @include position(absolute, null 0 null null);
+    background-color: $white;
+    border: $border-thin-smoke;
+    box-shadow: $pop-box-shadow;
+    box-sizing: border-box;
+    padding: 0 30px;
+    width: 250px;
+    z-index: 10;
+
+    &-block {
+        @include clearfix();
+        border-top: $border-thin-smoke;
+        padding: 20px 0;
+
+        &:first-child {
+            border-top: 0;
+        }
+    }
+
+    &-column {
+        float: left;
+        width: span(6);
+    }
+}
+
+.bcms-media-content-link {
+    color: $text-blue;
+    cursor: pointer;
+    font: {
+        family: $font-base-family;
+        size: 12px;
+        weight: 400;
+    }
+    line-height: 28px;
+}
+
+//module breadcrumbs
+.bcms-breadcrumbs-holder {
+    @include ellipsis();
+    @include position(absolute, 5px null null 0);
+    color: $text-blue;
+    max-width: 700px;
+    z-index: 1;
+}
+
+.bcms-breadcrumbs-root {
+    cursor: pointer;
+    display: inline;
+    font: {
+        family: $font-base-family;
+        size: 12px;
+        weight: 600;
+    }
+    line-height: 28px;
+}
+
+.bcms-preview-image-frame {
+    @include positioning($center: true);
+}

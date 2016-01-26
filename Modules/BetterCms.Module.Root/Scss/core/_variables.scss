@@ -1,0 +1,89 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_variables.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+$font-base-size: 13px;
+$font-base-family: 'Open Sans', sans-serif !important;
+$font-code-family: 'Courier New', Courier, monospace;
+
+//module borders
+$border-thin-dark: 1px solid $dark-main;
+$border-thin-dashed-dark: 1px dashed $dark-main;
+$border-thin-smoke: 1px solid $gray-smoke;
+$border-thin-dashed-smoke: 1px dashed $gray-smoke;
+$border-thick-dashed-smoke: 2px dashed $gray-smoke;
+//
+$border-thin-blue: 1px solid $border-blue;
+$border-thin-blue-dashed: 1px dashed $border-blue;
+$border-thick-blue: 2px solid $border-blue;
+$border-solid-red: 4px solid $border-red;
+$border-solid-blue: 4px solid $border-blue;
+//
+$border-form-element: 1px solid $light;
+$border-form-element-dashed: 1px dashed $light;
+$border-pop-box: 1px solid $light;
+$border-dialog: 1px solid #dcdada;
+//
+$border-thin-white: 1px solid $white;
+$border-thin-sky: 1px solid $sky-blue;
+//
+$border-thin-transparent: 1px solid transparent;
+$border-thick-transparent: 2px solid transparent;
+
+//module shadows
+$pop-box-shadow: 0 0 20px 0 rgba($black, .2);
+
+//module sizes
+$page-width: 1150px;
+$settings-sidebar: 180px;
+$page-frame-gutters: 20px;
+$header-height: 55px;
+$footer-height: 65px;
+$tab-height: 50px;
+$inner-navigation: 58px;
+$form-element-height: 36px;
+
+//module bourbon config
+$prefix-for-webkit: true;
+$prefix-for-mozilla: true;
+$prefix-for-microsoft: false;
+$prefix-for-opera: false;
+$prefix-for-spec: true;
+
+//module config
+$susy: (
+        columns: 12,
+        container: 1150px,
+        gutters: (20/60)
+);
+
+@function rem($target, $context: $font-base-size) {
+    @if $target == 0 {
+        @return (0);
+    }
+    @return (($target + 0px ) / $context + 0rem);
+}

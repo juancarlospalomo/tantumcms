@@ -1,0 +1,113 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_manager.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$alignment-position: (
+                ('left', $bcms-align-left, $bcms-align-left-active),
+                ('center', $bcms-align-center, $bcms-align-center-active),
+                ('right', $bcms-align-right, $bcms-align-right-active)
+);
+
+.bcms-croped-block {
+    border: $border-thin-blue-dashed;
+    max-height: 600px;
+    overflow: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.bcms-media-manager {
+    &-form {
+        @include clearfix();
+        border-bottom: $border-thin-smoke;
+        padding-bottom: 40px;
+    }
+
+    &-column-left {
+        float: left;
+        width: span(7);
+    }
+
+    &-column-right {
+        float: left;
+        margin-left: 45px;
+        width: span(4);
+    }
+}
+
+.bcms-media {
+    &-editor-container {
+        display: table;
+        width: 100%;
+    }
+
+    &-editor-column {
+        @include vertical-align($block: table-cell, $align: bottom);
+        padding-left: 10px;
+        width: span(4);
+
+        &:first-child {
+            padding-left: 0;
+        }
+    }
+
+    &-restore-size {
+        clear: both;
+        color: $text-blue;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+}
+
+.bcms-media-re-upload {
+    color: $text-blue;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+}
+
+.bcms-alignment-controls {
+    margin-top: 5px;
+
+    > div {
+        @include vertical-align();
+        cursor: pointer;
+        margin-right: 10px;
+        padding-top: 45px;
+        text-align: center;
+        width: 33px;
+    }
+
+    @each $name, $icon, $active-icon in $alignment-position {
+        .bcms-align-#{$name} {
+            background: url($icon) no-repeat center top;
+
+            &-active {
+                background: url($active-icon) no-repeat center top;
+            }
+        }
+    }
+}

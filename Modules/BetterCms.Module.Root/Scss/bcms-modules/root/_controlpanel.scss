@@ -1,0 +1,438 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_controlpanel.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$border-cp-frame: 1px solid #536082;
+$cp-handle-width: 54px;
+
+$control-panel-switch-status: (
+                ('on', $cp-blue, auto, 3px),
+                ('off', null, 3px, auto)
+);
+
+%cp-btn-frame {
+    @include transition(background-color 200ms);
+    color: $white;
+    cursor: pointer;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+    }
+    height: 36px;
+    line-height: 36px
+}
+
+%cp-settings-btn-frame {
+    @include transition(background-color 200ms);
+    background-color: $cp-dark;
+    border: $border-cp-frame;
+    box-sizing: border-box;
+    color: $cp-sky;
+    cursor: pointer;
+    font: {
+        family: $font-base-family;
+        size: 10px;
+        weight: 600;
+    }
+    height: 33px;
+    line-height: 33px;
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: lighten($cp-dark, 10%);
+    }
+
+    &:active {
+        background-color: darken($cp-dark, 5%);
+    }
+}
+
+//module control panel
+.bcms-sidemenu {
+    @include position(fixed, 100px null null -260px);
+    @include user-select();
+    background-color: $bg-dark;
+    box-sizing: border-box;
+    font-family: $font-base-family;
+    font-size: 12px;
+    line-height: 22px;
+    padding: 10px;
+    width: 260px;
+    z-index: 2000;
+
+    &.bcms-sidemenu-right {
+        left: auto;
+        right: 0;
+    }
+
+    &-header {
+        @include clearfix();
+        margin-bottom: 10px;
+    }
+
+    &-body {
+        border: {
+            top: $border-cp-frame;
+            bottom: $border-cp-frame;
+        }
+        overflow: hidden;
+        padding: 10px 0 5px;
+    }
+
+    &-footer {
+        @include clearfix();
+        margin: 8px auto 0;
+    }
+
+    &-handle {
+        @include user-select();
+        @include position(absolute, 0 null null null);
+        background-color: $cp-dark;
+        padding-top: 5px;
+        right: -($cp-handle-width);
+        width: $cp-handle-width;
+    }
+
+    &-openclosearrow {
+        background: url($bcms-cp-show) no-repeat center;
+        height: 46px;
+        margin: 0 auto 5px;
+        overflow: hidden;
+        text-indent: -999em;
+        width: 50px;
+
+        .bcms-state-open & {
+            background-image: url($bcms-cp-hide);
+        }
+    }
+
+    &-toggler {
+        cursor: pointer;
+    }
+
+    &-switch {
+        @include transition(background-color 200ms);
+        @include size(32px 56px);
+        background-color: $cp-gray;
+        border-radius: 2px;
+        cursor: pointer;
+        margin: 5px auto;
+        overflow: hidden;
+        position: relative;
+
+        @include virtual(after) {
+            @include positioning($center-x: true);
+            @include size(22px);
+            background-color: $cp-light;
+            border-radius: 2px;
+            box-sizing: border-box;
+            overflow: hidden;
+            top: 5px;
+
+            .bcms-on & {
+                bottom: 5px;
+                top: auto;
+            }
+        }
+
+        .bcms-on & {
+            background-color: $cp-blue;
+        }
+    }
+
+    @each $name, $name-icon in $control-panel-switch-status {
+        &-#{$name} {
+            color: $white;
+            font: {
+                family: $font-base-family;
+                size: 10px;
+                weight: 600;
+            }
+            height: 50%;
+            line-height: 28px;
+            width: 100%;
+            overflow: hidden;
+            text-transform: uppercase;
+            text-align: center;
+        }
+    }
+
+    &-pubstatus {
+        @include size(24px);
+        background: url($bcms-cp-pub-ok) no-repeat center;
+        margin: 15px auto;
+
+        &.bcms-pubstatus-warn {
+            background-image: url($bcms-cp-pub-warn);
+        }
+
+        &.bcms-pubstatus-draft {
+            background-image: url($bcms-cp-pub-draft);
+        }
+    }
+
+    &-drag-handle {
+        @include size(32px 17px);
+        background: url($bcms-cp-drag-handle) no-repeat center;
+        cursor: move;
+        margin: 15px auto 10px;
+    }
+}
+
+.bcms-user-profile {
+    @include ellipsis();
+    box-sizing: border-box;
+    color: $white;
+    cursor: pointer;
+    float: left;
+    line-height: 33px;
+    max-width: 140px;
+}
+
+.bcms-buttons-block {
+    @include clearfix();
+    margin-bottom: 5px;
+    padding-top: 5px;
+
+    .bcms-cp-seo-btn {
+        float: left;
+        width: span(6);
+
+        + .bcms-cp-settings-btn {
+            float: right;
+            width: span(6);
+        }
+    }
+}
+
+.bcms-cp {
+    &-settings-btn {
+        @extend %cp-settings-btn-frame;
+        text-align: center;
+    }
+
+    &-preview-btn {
+        @extend %cp-settings-btn-frame;
+        float: right;
+        padding: 0 34px 0 12px;
+        position: relative;
+
+        @include virtual(after) {
+            @include size(12px);
+            @include positioning($center-y: true);
+            background: url($bcms-cp-preview) no-repeat center;
+            right: 12px;
+        }
+    }
+
+    &-btn {
+        @extend %cp-btn-frame;
+        background-color: $cp-blue;
+        font-weight: 400;
+        margin: 5px 0;
+        padding: 0 16px;
+
+        &:hover {
+            background-color: lighten($cp-blue, 10%);
+        }
+
+        &:active {
+            background-color: darken($cp-blue, 5%);
+        }
+
+        &-add {
+            position: relative;
+
+            @include virtual(after) {
+                @include size(20px);
+                @include positioning($center-y: true);
+                background: url($bcms-cp-add) no-repeat center;
+                right: 10px;
+            }
+        }
+    }
+
+    &-delete {
+        @include size(25px 20px);
+        @include position(absolute, null 10px 10px null);
+        background: url($bcms-cp-delete) no-repeat center;
+        box-sizing: border-box;
+        cursor: pointer;
+        overflow: hidden;
+        text-indent: -999em;
+    }
+
+    &-logout {
+        @extend %cp-btn-frame;
+        background-color: $cp-red;
+        border-color: $cp-red;
+        color: $white;
+        float: left;
+        width: span(6);
+
+        &:hover {
+            background-color: lighten($cp-red, 10%);
+        }
+
+        &:active {
+            background-color: darken($cp-red, 5%);
+        }
+
+        + .bcms-cp-settings-btn {
+            float: right;
+            width: span(6);
+        }
+    }
+
+    &-logo {
+        float: left;
+    }
+
+    &-version-number {
+        color: $cp-smoke;
+        float: left;
+        font-size: 12px;
+        line-height: 1;
+        margin: 10px 10px 0;
+    }
+}
+
+.bcms-publisher {
+    &-block {
+        margin-bottom: 10px;
+    }
+
+    &-info {
+        @include vertical-align();
+        color: $cp-smoke;
+        cursor: default;
+        font: {
+            family: $font-base-family;
+            size: 10px;
+            weight: 600;
+        }
+        line-height: 1;
+        margin-left: 5px;
+        text-transform: uppercase;
+
+        .bcms-publisher-switch-on & {
+            color: $cp-sky;
+        }
+    }
+
+    &-includes-draft {
+        color: $cp-red;
+        display: inline;
+        font-weight: 700;
+        margin-left: 5px;
+    }
+}
+
+.bcms-switch {
+    @include transition(background-color 200ms);
+    @include size(50px 22px);
+    @include vertical-align();
+    background-color: $cp-gray;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+
+    @include virtual(after) {
+        @include positioning($center-y: true);
+        @include size(20px 16px);
+        background-color: $cp-light;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    @each $name, $bg-color, $left, $right in $control-panel-switch-status {
+        &.bcms-switch-#{$name} {
+            background-color: $bg-color;
+
+            &:after {
+                left: $left;
+                right: $right;
+            }
+        }
+    }
+
+    &-text {
+        color: $white;
+        float: left;
+        font: {
+            family: $font-base-family;
+            size: 10px;
+            weight: 600;
+        }
+        height: 100%;
+        line-height: 22px;
+        overflow: hidden;
+        text-align: center;
+        text-transform: uppercase;
+        width: 50%;
+    }
+}
+
+//module control panel right
+.bcms-sidemenu-right {
+    .bcms-sidemenu-openclosearrow {
+        background-image: url($bcms-cp-show-right);
+    }
+
+    .bcms-sidemenu-handle {
+        left: -($cp-handle-width);
+        right: auto;
+    }
+
+    &.bcms-state-open {
+        .bcms-sidemenu-openclosearrow {
+            background-image: url($bcms-cp-hide-right);
+        }
+    }
+
+    .bcms-user-profile {
+        float: right;
+    }
+
+    .bcms-cp-preview-btn {
+        float: left;
+    }
+
+    .bcms-cp-logo {
+        float: right;
+    }
+
+    .bcms-cp-version-number {
+        float: right;
+    }
+
+    .bcms-cp-delete {
+        left: 10px;
+        right: auto;
+    }
+}
